@@ -4,6 +4,23 @@ declare(strict_types=1);
 
 final class PromptComposer
 {
+    private const CENSORSHIP_NEGATIVE_GUARD = 'censored, censorship, censor bar, white censor bar, black censor bar, opaque censor bar, privacy bar, mosaic censoring, pixelated censor, pixelated genitals, pixelated nipples, blurred genitals, blurred nipples, censor blur, censorship tape, strategically covered, steam censor, fog censor, light beam censor, genitals covered by censor bar, nipples covered by censor bar';
+
+    private const CENSORSHIP_POLISH_BLOCK_PATTERNS = [
+        '/\bcensored\b/u',
+        '/\bcensorship\b/u',
+        '/\bcensor\s*(?:bar|blur|overlay)\b/u',
+        '/\b(?:white|black|opaque)\s+censor\s+bar\b/u',
+        '/\bprivacy\s+bar\b/u',
+        '/\bmosaic\s+censor(?:ing)?\b/u',
+        '/\bpixelated\s+(?:censor|genitals|nipples)\b/u',
+        '/\bblurred\s+(?:genitals|nipples)\b/u',
+        '/\bcensorship\s+tape\b/u',
+        '/\bstrategically\s+covered\b/u',
+        '/\b(?:steam|fog|light beam)\s+censor\b/u',
+        '/\b(?:genitals|nipples)\s+covered\s+by\s+censor\s+bar\b/u',
+    ];
+
     public function __construct(private UmaCatalog $catalog, private ?Store $store = null)
     {
     }
@@ -87,6 +104,7 @@ final class PromptComposer
         ]);
         $loraDirectorGuard = $this->loraDirectorGuardLayers($input, $nsfw['selection'] ?? []);
         $ensemble = $this->ensembleLayers($input['loras'], !array_key_exists('anonymous_partner', $input) || (bool) $input['anonymous_partner']);
+        $censorshipNegativeGuard = self::CENSORSHIP_NEGATIVE_GUARD;
 
         $locked = [
             'full_name' => $character['full_name'] ?? $character['name'],
@@ -156,6 +174,7 @@ final class PromptComposer
             'lora_director_blocked' => $loraDirectorGuard['lora_director_blocked'],
             'style_tags' => $styleTags,
             'composition_negative_guard' => $composition['negative_tags'],
+            'censorship_negative_guard' => $censorshipNegativeGuard,
             'manual' => $manualPrompt,
             'llm_polish' => $llmPolish,
         ];
@@ -175,7 +194,7 @@ final class PromptComposer
                 $positiveLayers['ensemble_tags']
             );
         }
-        unset($positiveLayers['lora_conflict_negatives'], $positiveLayers['lora_variants'], $positiveLayers['lora_variant_character_templates'], $positiveLayers['lora_variant_negatives'], $positiveLayers['lora_variant_clothing_policy'], $positiveLayers['lora_variant_clothing_removed'], $positiveLayers['lora_variant_clothing_warning'], $positiveLayers['lora_variant_camera_removed'], $positiveLayers['lora_variant_camera_negative'], $positiveLayers['lora_director_guard'], $positiveLayers['lora_director_warnings'], $positiveLayers['lora_director_blocked'], $positiveLayers['pose_blocked'], $positiveLayers['nsfw_contact_lock_negative'], $positiveLayers['nsfw_effects_blocked'], $positiveLayers['nsfw_effects_warning'], $positiveLayers['composition_negative_guard'], $positiveLayers['clothing_override_negative'], $positiveLayers['clothing_override_removed'], $positiveLayers['outfit_filtered'], $positiveLayers['quick_tags_visual'], $positiveLayers['quick_tags_semantic_applied'], $positiveLayers['quick_tags_semantic_ignored']);
+        unset($positiveLayers['lora_conflict_negatives'], $positiveLayers['lora_variants'], $positiveLayers['lora_variant_character_templates'], $positiveLayers['lora_variant_negatives'], $positiveLayers['lora_variant_clothing_policy'], $positiveLayers['lora_variant_clothing_removed'], $positiveLayers['lora_variant_clothing_warning'], $positiveLayers['lora_variant_camera_removed'], $positiveLayers['lora_variant_camera_negative'], $positiveLayers['lora_director_guard'], $positiveLayers['lora_director_warnings'], $positiveLayers['lora_director_blocked'], $positiveLayers['pose_blocked'], $positiveLayers['nsfw_contact_lock_negative'], $positiveLayers['nsfw_effects_blocked'], $positiveLayers['nsfw_effects_warning'], $positiveLayers['composition_negative_guard'], $positiveLayers['censorship_negative_guard'], $positiveLayers['clothing_override_negative'], $positiveLayers['clothing_override_removed'], $positiveLayers['outfit_filtered'], $positiveLayers['quick_tags_visual'], $positiveLayers['quick_tags_semantic_applied'], $positiveLayers['quick_tags_semantic_ignored']);
         $segments = array_filter($positiveLayers, static fn (string $segment): bool => trim($segment) !== '');
 
         $negative = $this->joinSegments([
@@ -189,6 +208,7 @@ final class PromptComposer
             $loraConflictNegatives,
             $loraVariantNegatives,
             $variantCameraLock['negative_tags'],
+            $censorshipNegativeGuard,
             (string) ($input['negative_prompt'] ?? ''),
         ]);
 
@@ -302,6 +322,9 @@ final class PromptComposer
             if (isset($seen[$key])) {
                 continue;
             }
+            if ($this->isCensorshipPolishTag($key)) {
+                continue;
+            }
             $seen[$key] = true;
             $clean[] = $tag;
             if (count($clean) >= 48) {
@@ -309,6 +332,16 @@ final class PromptComposer
             }
         }
         return implode(', ', $clean);
+    }
+
+    private function isCensorshipPolishTag(string $tag): bool
+    {
+        foreach (self::CENSORSHIP_POLISH_BLOCK_PATTERNS as $pattern) {
+            if (preg_match($pattern, $tag) === 1) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private function resolveCharacter(array $input): ?array

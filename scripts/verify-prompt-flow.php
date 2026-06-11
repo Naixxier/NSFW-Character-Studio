@@ -19,6 +19,10 @@ final class PromptFlowVerifier
             $auditor = new PromptAuditor($composer, $store);
             $character = $this->characterWithBaseLoraAndOutfit($store);
 
+            $this->verifyGlobalCensorshipGuard($composer, $character);
+            $this->verifyNsfwCensorshipGuard($composer, $character);
+            $this->verifyLlmPolishRemovesCensorshipTags($composer);
+            $this->verifyHiresInheritsFinalNegativePrompt();
             $this->verifyHardNsfwNoActIsNeutral($composer, $character);
             $this->verifyStrictActBlocksIncompatibleLora($auditor, $character);
             $this->verifyClothingLoraBlocksActiveOutfit($auditor, $character);
@@ -123,6 +127,61 @@ final class PromptFlowVerifier
             'loras' => [],
             'sd_payload' => ['seed' => -1],
         ];
+    }
+
+    private function verifyGlobalCensorshipGuard(PromptComposer $composer, array $character): void
+    {
+        $composed = $composer->compose($this->baseInput($character));
+        $negative = mb_strtolower((string) ($composed['negative_prompt'] ?? ''));
+        foreach (['censor bar', 'white censor bar', 'mosaic censoring', 'strategically covered'] as $term) {
+            $this->assert(str_contains($negative, $term), "Standard mode negative prompt must include anti-censorship guard term {$term}.");
+        }
+        $this->assert(!str_contains(mb_strtolower((string) ($composed['prompt'] ?? '')), 'uncensored'), 'Standard mode must not add uncensored as a positive tag.');
+        $this->assert(str_contains((string) ($composed['layers']['censorship_negative_guard'] ?? ''), 'censor bar'), 'Debug layers must expose censorship_negative_guard.');
+    }
+
+    private function verifyNsfwCensorshipGuard(PromptComposer $composer, array $character): void
+    {
+        foreach ([
+            ['mode' => 'soft_nsfw', 'nsfw_intensity' => 'soft'],
+            ['mode' => 'hard_nsfw', 'nsfw_intensity' => 'hard'],
+        ] as $case) {
+            $composed = $composer->compose(array_replace($this->baseInput($character), [
+                'mode' => $case['mode'],
+                'nsfw_enabled' => true,
+                'nsfw_intensity' => $case['nsfw_intensity'],
+                'nsfw_act' => '',
+            ]));
+            $negative = mb_strtolower((string) ($composed['negative_prompt'] ?? ''));
+            foreach (['censor bar', 'privacy bar', 'censor blur'] as $term) {
+                $this->assert(str_contains($negative, $term), "{$case['mode']} negative prompt must include anti-censorship guard term {$term}.");
+            }
+        }
+    }
+
+    private function verifyLlmPolishRemovesCensorshipTags(PromptComposer $composer): void
+    {
+        $method = new ReflectionMethod(PromptComposer::class, 'sanitizePolish');
+        $method->setAccessible(true);
+        $clean = (string) $method->invoke($composer, 'soft rim light, censor bar, mosaic censoring, strategically covered, white censor bar, cinematic lighting, uncensored', [
+            'full_name' => '',
+            'feature_tags' => '',
+            'appearance_tags' => '',
+            'outfit_tags' => '',
+        ]);
+        $lower = mb_strtolower($clean);
+        foreach (['soft rim light', 'cinematic lighting', 'uncensored'] as $allowed) {
+            $this->assert(str_contains($lower, $allowed), "LLM polish sanitizer must preserve non-censorship tag {$allowed}.");
+        }
+        foreach (['censor bar', 'mosaic censoring', 'strategically covered', 'white censor bar'] as $blocked) {
+            $this->assert(!str_contains($lower, $blocked), "LLM polish sanitizer must remove censorship tag {$blocked}.");
+        }
+    }
+
+    private function verifyHiresInheritsFinalNegativePrompt(): void
+    {
+        $index = (string) file_get_contents(dirname(__DIR__) . '/public/index.php');
+        $this->assert(str_contains($index, '$payload[\'negative_prompt\'] ??'), 'Hires.fix must start hr_negative_prompt from the final negative prompt.');
     }
 
     private function verifyHardNsfwNoActIsNeutral(PromptComposer $composer, array $character): void

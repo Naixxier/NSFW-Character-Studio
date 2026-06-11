@@ -21,6 +21,8 @@ final class Store
     private const CLEAN_HIRES_STYLE_NEGATIVE = 'motion lines, speed lines, action lines, sketch lines, rough lineart, thick outlines, scratchy lines, noisy outlines, smeared details, oversharpened edges, cel shading artifacts, blocky shading, unfinished hands, undetailed fingernails';
     private const CLEAN_HIRES_STRIP_TAGS = 'clean lineart, lineart, anime screencap, screencap, motion blur, motion lines, speed lines, action lines, dynamic motion, fine motion';
     private const PREMIUM_ANIME_XL_CLEAN = 'masterpiece, best quality, newest, highres, absurdres, detailed eyes, cinematic lighting';
+    private const CENSORSHIP_NEGATIVE_GUARD = 'censored, censorship, censor bar, white censor bar, black censor bar, opaque censor bar, privacy bar, mosaic censoring, pixelated censor, pixelated genitals, pixelated nipples, blurred genitals, blurred nipples, censor blur, censorship tape, strategically covered, steam censor, fog censor, light beam censor, genitals covered by censor bar, nipples covered by censor bar';
+    private const PROMPT_DEBUG_CENSORSHIP_INSTRUCTION = 'Do not add censor bars, mosaic censoring, blur censor, strategically covered poses, privacy bars, or censorship overlays.';
 
     private PDO $pdo;
     private string $driver;
@@ -79,6 +81,7 @@ final class Store
             }
         }
         $settings = $this->upgradeHiresAnatomyDefaults($settings);
+        $settings = $this->upgradePromptDebugCensorshipInstruction($settings);
         unset($settings['sd']['a' . 'detailer']);
 
         return $settings;
@@ -1544,7 +1547,7 @@ final class Store
         $defaults = $this->seedPack()['presets'] ?: [
             ['type' => 'global', 'name' => 'Premium anime XL', 'content' => self::PREMIUM_ANIME_XL_CLEAN],
             ['type' => 'global', 'name' => 'Portrait polish', 'content' => 'solo focus, upper body, expressive eyes, soft rim light, depth of field'],
-            ['type' => 'negative', 'name' => 'Anime XL clean negative', 'content' => 'lowres, worst quality, low quality, bad anatomy, bad hands, missing fingers, extra fingers, text, watermark, signature, jpeg artifacts, blurry'],
+            ['type' => 'negative', 'name' => 'Anime XL clean negative', 'content' => $this->appendUniqueTags('lowres, worst quality, low quality, bad anatomy, bad hands, missing fingers, extra fingers, text, watermark, signature, jpeg artifacts, blurry', self::CENSORSHIP_NEGATIVE_GUARD)],
             ['type' => 'negative', 'name' => 'Strict cleanup', 'content' => 'deformed, mutated, extra limbs, poorly drawn face, poorly drawn hands, malformed hands, cropped, out of frame'],
         ];
 
@@ -1922,10 +1925,19 @@ final class Store
                 'max_tokens' => 220,
             ],
             'prompt_debug' => [
-                'system_template' => 'You are a Stable Diffusion prompt editor. Return only comma-separated positive prompt additions. Do not include negatives. Do not repeat or rewrite locked tags. Do not add prose.',
+                'system_template' => 'You are a Stable Diffusion prompt editor. Return only comma-separated positive prompt additions. Do not include negatives. Do not repeat or rewrite locked tags. Do not add prose. ' . self::PROMPT_DEBUG_CENSORSHIP_INSTRUCTION,
                 'user_template' => "Locked ULTIMA tags that must remain untouched and must not be rewritten:\n{{locked_tags}}\n\nCurrent positive prompt:\n{{prompt}}\n\nSelected style tags:\n{{style_tags}}\n\nAdd concise quality, scene, composition, lighting, camera, and style tags that complement this prompt.",
             ],
         ];
+    }
+
+    private function upgradePromptDebugCensorshipInstruction(array $settings): array
+    {
+        $template = trim((string) ($settings['prompt_debug']['system_template'] ?? ''));
+        if ($template !== '' && !str_contains(mb_strtolower($template), 'censor bars')) {
+            $settings['prompt_debug']['system_template'] = $template . ' ' . self::PROMPT_DEBUG_CENSORSHIP_INSTRUCTION;
+        }
+        return $settings;
     }
 
     private function upgradeHiresAnatomyDefaults(array $settings): array
@@ -2227,7 +2239,7 @@ final class Store
                     'wet_skin' => ['key' => 'wet_skin', 'label' => 'Wet skin', 'group' => 'body_detail', 'tags' => 'wet skin, glossy skin, shiny body highlights, sweat sheen', 'negative_tags' => 'dry skin, flat shading', 'compatible_act_groups' => 'solo, tease, breast_sex, oral, penetration, anal, toy, bondage', 'incompatible_acts' => '', 'requires_scene_intent' => ''],
                     'body_fluid_detail' => ['key' => 'body_fluid_detail', 'label' => 'Body fluid detail', 'group' => 'fluids', 'tags' => 'body fluids, wet detail, explicit fluid detail', 'negative_tags' => 'dry clean body', 'compatible_act_groups' => 'breast_sex, oral, penetration, anal, toy', 'incompatible_acts' => 'nude_pose, straddling_tease, bondage_pose', 'requires_scene_intent' => 'implied_pov, visible_partner, close_contact, toy_only'],
                     'finish_on_body' => ['key' => 'finish_on_body', 'label' => 'Finish on body', 'group' => 'fluids', 'tags' => 'cum on body, finish on skin, messy body finish', 'negative_tags' => 'clean body, no fluids', 'compatible_act_groups' => 'breast_sex, oral, penetration, anal, toy', 'incompatible_acts' => 'nude_pose, spread_legs, bondage_pose', 'requires_scene_intent' => 'implied_pov, visible_partner, close_contact'],
-                    'exposure_emphasis' => ['key' => 'exposure_emphasis', 'label' => 'Exposure emphasis', 'group' => 'exposure', 'tags' => 'explicit exposure, clear exposed anatomy, uncensored detail', 'negative_tags' => 'censored, mosaic censoring, strategically covered', 'compatible_act_groups' => 'solo, tease, breast_sex, oral, penetration, anal, toy', 'incompatible_acts' => '', 'requires_scene_intent' => ''],
+                    'exposure_emphasis' => ['key' => 'exposure_emphasis', 'label' => 'Exposure emphasis', 'group' => 'exposure', 'tags' => 'explicit exposure, clear exposed anatomy, uncensored detail', 'negative_tags' => $this->appendUniqueTags('censored, mosaic censoring, strategically covered', self::CENSORSHIP_NEGATIVE_GUARD), 'compatible_act_groups' => 'solo, tease, breast_sex, oral, penetration, anal, toy', 'incompatible_acts' => '', 'requires_scene_intent' => ''],
                     'contact_point' => ['key' => 'contact_point', 'label' => 'Contact point', 'group' => 'partner_contact', 'tags' => 'clear contact point, visible body contact, readable interaction', 'negative_tags' => 'unclear contact point, disconnected bodies', 'compatible_act_groups' => 'breast_sex, oral, penetration, anal, toy', 'incompatible_acts' => 'nude_pose, masturbation', 'requires_scene_intent' => 'implied_pov, visible_partner, close_contact, toy_only'],
                     'intense_messy' => ['key' => 'intense_messy', 'label' => 'Intense messy', 'group' => 'messy_intense', 'tags' => 'intense erotic mess, heavy breathing, flushed face, chaotic sheets', 'negative_tags' => 'calm clean pose, distant framing', 'compatible_act_groups' => 'breast_sex, oral, penetration, anal, toy', 'incompatible_acts' => 'nude_pose, straddling_tease', 'requires_scene_intent' => 'implied_pov, visible_partner, close_contact, toy_only'],
                 ],
@@ -2271,12 +2283,45 @@ final class Store
             }
         }
 
+        $nsfwDirector = $this->normalizeNsfwDirector($library['nsfw_director'] ?? []);
+        $nsfwDirector = $this->reinforceCensorshipGuardInDirector($nsfwDirector);
+
         return [
             'modes' => $modes ?: $defaults['modes'],
             'quick_tags' => $quickTags ?: $defaults['quick_tags'],
             'pose_library' => $this->normalizePoseLibrary($library['pose_library'] ?? [], $defaults['pose_library']),
-            'nsfw_director' => $this->normalizeNsfwDirector($library['nsfw_director'] ?? []),
+            'nsfw_director' => $nsfwDirector,
         ];
+    }
+
+    private function reinforceCensorshipGuardInDirector(array $director): array
+    {
+        if (isset($director['effects']['exposure_emphasis']) && is_array($director['effects']['exposure_emphasis'])) {
+            $director['effects']['exposure_emphasis']['negative_tags'] = $this->appendUniqueTags(
+                (string) ($director['effects']['exposure_emphasis']['negative_tags'] ?? ''),
+                self::CENSORSHIP_NEGATIVE_GUARD
+            );
+        }
+        return $director;
+    }
+
+    private function appendUniqueTags(string $base, string $extra): string
+    {
+        $seen = [];
+        $tags = [];
+        foreach (explode(',', $base . ', ' . $extra) as $tag) {
+            $tag = trim($tag);
+            if ($tag === '') {
+                continue;
+            }
+            $key = mb_strtolower($tag);
+            if (isset($seen[$key])) {
+                continue;
+            }
+            $seen[$key] = true;
+            $tags[] = $tag;
+        }
+        return implode(', ', $tags);
     }
 
     private function upgradePromptLibraryDefaults(): void
