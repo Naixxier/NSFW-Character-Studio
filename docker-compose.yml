@@ -1,0 +1,43 @@
+services:
+  app:
+    build: .
+    environment:
+      APP_ENV: "${APP_ENV:-local}"
+      APP_BASE_URL: "${APP_BASE_URL:-http://localhost:${APP_PORT:-8088}}"
+      DATA_DIR: "${DATA_DIR:-/var/www/html/data}"
+      PACKS_DIR: "${PACKS_DIR:-/var/www/html/packs}"
+      DB_DRIVER: "${DB_DRIVER:-pgsql}"
+      SQLITE_PATH: "${SQLITE_PATH:-/var/www/html/data/planner.sqlite}"
+      DATABASE_URL: "${DATABASE_URL:-pgsql://character_studio:character_studio@db:5432/character_studio}"
+      SD_BASE_URL: "${SD_BASE_URL:-http://host.docker.internal:7860}"
+      LLM_BASE_URL: "${LLM_BASE_URL:-}"
+      LLM_MODEL: "${LLM_MODEL:-}"
+      LLM_API_KEY: "${LLM_API_KEY:-}"
+      UMA_BASE_LORA_ALIAS: "${UMA_BASE_LORA_ALIAS:-UmaDiffusionXL_4th_weighted}"
+    ports:
+      - "${APP_PORT:-8088}:80"
+    volumes:
+      - app_data:/var/www/html/data
+      - ./packs:/var/www/html/packs:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB:-character_studio}"
+      POSTGRES_USER: "${POSTGRES_USER:-character_studio}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-character_studio}"
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations/pgsql:/docker-entrypoint-initdb.d:ro
+    restart: unless-stopped
+
+volumes:
+  app_data:
+  postgres_data:

@@ -1,0 +1,7 @@
+/data/
+/packs/*
+!/packs/public/
+!/packs/public/**
+.env
+.env.*
+!.env.example

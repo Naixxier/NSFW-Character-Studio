@@ -1,0 +1,16 @@
+.git
+.gitignore
+.env
+data/*.sqlite
+data/*.sqlite-*
+data/*.png
+data/*.jpg
+data/*.jpeg
+data/*.webp
+data/ultima_catalog.json
+data/
+packs/*
+!packs/public/
+!packs/public/**
+node_modules/
+vendor/

@@ -1,0 +1,639 @@
+{
+  "version": 1,
+  "series": [
+    {
+      "key": "sample_studio",
+      "name": "Sample Studio",
+      "source_type": "seed_pack",
+      "description": "Public sample series for fresh Character Studio installs.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    },
+    {
+      "key": "black_lagoon",
+      "name": "Black Lagoon",
+      "source_type": "public_seed",
+      "description": "Public character profiles without bundled model adapter metadata. Add your own model adapter aliases in Settings when available.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    },
+    {
+      "key": "bleach",
+      "name": "Bleach",
+      "source_type": "public_seed",
+      "description": "Public character profiles without bundled model adapter metadata. Add your own model adapter aliases in Settings when available.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    },
+    {
+      "key": "chainsaw_man",
+      "name": "Chainsaw Man",
+      "source_type": "public_seed",
+      "description": "Public character profiles without bundled model adapter metadata. Add your own model adapter aliases in Settings when available.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    },
+    {
+      "key": "code_geass",
+      "name": "Code Geass",
+      "source_type": "public_seed",
+      "description": "Public character profiles without bundled model adapter metadata. Add your own model adapter aliases in Settings when available.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    },
+    {
+      "key": "cowboy_bebop",
+      "name": "Cowboy Bebop",
+      "source_type": "public_seed",
+      "description": "Public character profiles without bundled model adapter metadata. Add your own model adapter aliases in Settings when available.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    },
+    {
+      "key": "evangelion",
+      "name": "Evangelion",
+      "source_type": "public_seed",
+      "description": "Public character profiles without bundled model adapter metadata. Add your own model adapter aliases in Settings when available.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    },
+    {
+      "key": "frieren",
+      "name": "Frieren",
+      "source_type": "public_seed",
+      "description": "Public character profiles without bundled model adapter metadata. Add your own model adapter aliases in Settings when available.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    },
+    {
+      "key": "ghost_in_the_shell",
+      "name": "Ghost in the Shell",
+      "source_type": "public_seed",
+      "description": "Public character profiles without bundled model adapter metadata. Add your own model adapter aliases in Settings when available.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    },
+    {
+      "key": "konosuba",
+      "name": "Konosuba",
+      "source_type": "public_seed",
+      "description": "Public character profiles without bundled model adapter metadata. Add your own model adapter aliases in Settings when available.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    },
+    {
+      "key": "naruto",
+      "name": "Naruto",
+      "source_type": "public_seed",
+      "description": "Public character profiles without bundled model adapter metadata. Add your own model adapter aliases in Settings when available.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    },
+    {
+      "key": "one_piece",
+      "name": "One Piece",
+      "source_type": "public_seed",
+      "description": "Public character profiles without bundled model adapter metadata. Add your own model adapter aliases in Settings when available.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    },
+    {
+      "key": "spy_x_family",
+      "name": "Spy x Family",
+      "source_type": "public_seed",
+      "description": "Public character profiles without bundled model adapter metadata. Add your own model adapter aliases in Settings when available.",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "nsfw_default": true
+    }
+  ],
+  "characters": [
+    {
+      "series_key": "sample_studio",
+      "key": "sample_muse",
+      "display_name": "Sample Muse",
+      "full_name": "Sample Muse",
+      "aliases": [
+        "sample muse"
+      ],
+      "feature_tags": "sample muse, adult woman, long hair, expressive eyes, confident expression",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "notes": "Public original sample profile. Add your own model adapter alias in Settings if desired.",
+      "appearances": [
+        {
+          "name": "Default",
+          "prompt": "long hair, expressive eyes, confident expression"
+        }
+      ],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, fitted top, short skirt, thighhighs"
+        }
+      ]
+    },
+    {
+      "series_key": "black_lagoon",
+      "key": "revy",
+      "display_name": "Revy",
+      "full_name": "Revy",
+      "aliases": [],
+      "feature_tags": "revy, brown hair, ponytail, tattoos, crop top, dual pistols, fierce expression",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "bleach",
+      "key": "rangiku_matsumoto",
+      "display_name": "Rangiku Matsumoto",
+      "full_name": "Rangiku Matsumoto",
+      "aliases": [],
+      "feature_tags": "rangiku matsumoto, blonde hair, large breasts, shinigami outfit, beauty mark, wavy hair",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "bleach",
+      "key": "yoruichi_shihouin",
+      "display_name": "Yoruichi Shihouin",
+      "full_name": "Yoruichi Shihouin",
+      "aliases": [],
+      "feature_tags": "yoruichi shihouin, dark skin, purple hair, golden eyes, athletic body, confident smile",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "chainsaw_man",
+      "key": "makima",
+      "display_name": "Makima",
+      "full_name": "Makima",
+      "aliases": [],
+      "feature_tags": "makima, red hair, braided hair, ringed eyes, business suit, calm expression, dominant aura",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "code_geass",
+      "key": "c_c",
+      "display_name": "C.C.",
+      "full_name": "C.C.",
+      "aliases": [],
+      "feature_tags": "c.c., green hair, golden eyes, long hair, white outfit, mysterious smile",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "cowboy_bebop",
+      "key": "faye_valentine",
+      "display_name": "Faye Valentine",
+      "full_name": "Faye Valentine",
+      "aliases": [],
+      "feature_tags": "faye valentine, purple hair, yellow outfit, red lipstick, confident woman",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "evangelion",
+      "key": "misato_katsuragi",
+      "display_name": "Misato Katsuragi",
+      "full_name": "Misato Katsuragi",
+      "aliases": [],
+      "feature_tags": "misato katsuragi, purple hair, brown eyes, red jacket, mature woman, confident smile",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "evangelion",
+      "key": "ritsuko_akagi",
+      "display_name": "Ritsuko Akagi",
+      "full_name": "Ritsuko Akagi",
+      "aliases": [],
+      "feature_tags": "ritsuko akagi, blonde hair, short hair, scientist, mature woman, lab coat",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "frieren",
+      "key": "frieren",
+      "display_name": "Frieren",
+      "full_name": "Frieren",
+      "aliases": [],
+      "feature_tags": "frieren, elf ears, white hair, twin tails, green eyes, mage outfit, calm expression",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "frieren",
+      "key": "ubel",
+      "display_name": "Ubel",
+      "full_name": "Ubel",
+      "aliases": [
+        "Übel"
+      ],
+      "feature_tags": "ubel, 1girl, green hair, bangs, hair between eyes, side ponytail, purple eyes",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Base Outfit",
+          "prompt": "black choker, collarbone, sleeveless, black dress, sleeveless dress, halterneck, pleated skirt, black gloves, belt, black footwear"
+        }
+      ]
+    },
+    {
+      "series_key": "ghost_in_the_shell",
+      "key": "motoko_kusanagi",
+      "display_name": "Motoko Kusanagi",
+      "full_name": "Motoko Kusanagi",
+      "aliases": [],
+      "feature_tags": "motoko kusanagi, purple hair, cyborg woman, bodysuit, mature face",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "konosuba",
+      "key": "darkness",
+      "display_name": "Darkness",
+      "full_name": "Darkness",
+      "aliases": [],
+      "feature_tags": "darkness, blonde hair, blue eyes, armor, knight woman, curvy body",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "konosuba",
+      "key": "wiz",
+      "display_name": "Wiz",
+      "full_name": "Wiz",
+      "aliases": [],
+      "feature_tags": "wiz, brown hair, purple eyes, witch outfit, soft expression",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "naruto",
+      "key": "mei_terumi",
+      "display_name": "Mei Terumi",
+      "full_name": "Mei Terumi",
+      "aliases": [],
+      "feature_tags": "mei terumi, auburn hair, green eyes, long hair, mature woman, hidden mist outfit",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "naruto",
+      "key": "tsunade",
+      "display_name": "Tsunade",
+      "full_name": "Tsunade",
+      "aliases": [],
+      "feature_tags": "tsunade, blonde hair, brown eyes, forehead mark, large breasts, green haori",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "one_piece",
+      "key": "boa_hancock",
+      "display_name": "Boa Hancock",
+      "full_name": "Boa Hancock",
+      "aliases": [],
+      "feature_tags": "boa hancock, long black hair, blue eyes, earrings, elegant dress, confident pose",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "one_piece",
+      "key": "nico_robin",
+      "display_name": "Nico Robin",
+      "full_name": "Nico Robin",
+      "aliases": [],
+      "feature_tags": "nico robin, black hair, blue eyes, mature woman, elegant, sunglasses on head",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    },
+    {
+      "series_key": "spy_x_family",
+      "key": "yor_forger",
+      "display_name": "Yor Forger",
+      "full_name": "Yor Forger",
+      "aliases": [],
+      "feature_tags": "yor forger, black hair, red eyes, long hair, elegant woman, assassin outfit, gold hairband, confident expression",
+      "adult_framing_tags": "adult woman, mature body, adult proportions",
+      "base_lora_alias": "",
+      "base_lora_weight": 1,
+      "default_negative": "",
+      "source_type": "public_seed",
+      "notes": "Public seed profile without bundled model adapter metadata. Add your own character model adapter alias in Settings if desired.",
+      "appearances": [],
+      "outfits": [
+        {
+          "name": "Ninguno",
+          "prompt": ""
+        },
+        {
+          "name": "Default style",
+          "prompt": "signature outfit, character accurate outfit"
+        }
+      ]
+    }
+  ],
+  "lora_library": [],
+  "lora_variants": [],
+  "presets": [
+    {
+      "type": "global",
+      "name": "Premium anime XL",
+      "content": "masterpiece, best quality, newest, highres, absurdres, detailed eyes, cinematic lighting"
+    },
+    {
+      "type": "global",
+      "name": "Portrait polish",
+      "content": "solo focus, upper body, expressive eyes, soft rim light, depth of field"
+    },
+    {
+      "type": "negative",
+      "name": "Anime XL clean negative",
+      "content": "lowres, worst quality, low quality, bad anatomy, bad hands, missing fingers, extra fingers, text, watermark, signature, jpeg artifacts, blurry"
+    }
+  ]
+}
